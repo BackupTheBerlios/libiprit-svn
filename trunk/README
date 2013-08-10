@@ -1,0 +1,103 @@
+Libiprit is a collection of image processing algorithms, optimized for using with the Qt library. The library is distributed under the LGPL licence. Currently the library contains only RGB to grayscale and grayscale to black and white image conversion algorithms, but more algorithms are to be added soon.
+
+Copyright 2013 Andrei Borovsky, anb@symmetrica.net
+The library is distributed under the GNU Lesser General Public License (LGPL) V 3 or later.
+The current version is 0.04
+
+========================================================================================================
+
+Contets of this file:
+--------------------------------------------------------------------------------------------------------
+Downloads
+
+FAQ
+
+Features
+
+========================================================================================================
+
+Downloads
+
+The download link is http://symmetrica.net/iprit/libiprit.zip
+
+========================================================================================================
+
+FAQ
+
+Following is a short FAQ list about Libiprit
+
+Q. Why yet another image processing library when there are already Leptonica, Gamera, and so on?
+
+A. I developed Libiprit as a branch of my YAGF project. For this I needed a bunch of text recognition-oriented algorithms integrated natively with Qt. That's what Libiprit basically is. Apart from that Libiprit contains some algorithms which above mentioned libraries do not, and there will be more such algorithms in the future. Libiprit also can be set up (and is so by default) to use the Qt multithreading mechanisms to increase its operation speed.
+
+Q. Why such a sinister name for a library?
+
+A. Well, when choosing the name for the library I wanted it to contain the "ip" (which of course stands for "image processing"). I also wanted the name to stand out and not to be mixed with the other libraries' names. So it is Libiprit. BTW, being a chemist by my first degree I'm quite aware of what a nasty thing iprit is.
+
+Q. Is Libiprit usable on Windows (MacOS) or other OS?
+
+A. LIbiprit is usable anywhere where Qt is available.
+
+Q. Which Qt versions Libiprit is compatible with?
+
+A. It is compatible with Qt 4.6 and any above version.
+
+Q. How to build libiprit?
+
+A. Libiprit uses the CMake build manager. I will not provide any special commands here because they depend on your target platform.
+
+Q. I want to contribute some algorithm to Libiprit, can I do It?
+
+A. Of course, you are welcome. The only thing to keep in mind is that since the library is distributed under LGPL, your contribution should not violate it. In other words you cannot take some code wich is protected by any LGPL-incompatible license and put it to Libiprit.
+
+Enjoy using Libiprit!
+
+========================================================================================================
+
+Features
+
+Currnetly Libiprit supports following operations on gray-scale (256 level) and binary images:
+
+· Converting images from RGB to gray-scale using several methods
+· Global and adaptive image binarisation using following algorithms:
+	Otsu global binarization 
+	Niblack adaptive binarization 
+	Sauvola adaptive binarization 
+	Maximum entropy global binarization 
+	Bradley adaptive binarization 
+	Global iterative binarization 
+	Bernsen adaptive binarization 
+	Gatos adaptive binarization
+ 
+· The library can also perform following operations on gray-scale images:
+	blur/sharpen the eimage.
+	calculate the hystogram for the entire image or for any rectangle part of it.
+	Equalize the image based on the global historgam. 
+	Calculate mean brightness threshold for the entire image or for any rectangle part of it.
+	Produce an inverse of an image.
+
+Following operations can be performed on black and white images:
+	
+· Binary morphological dilation
+· Binary morphological erosion
+· Binary morphological opening
+· Binary morphological closing
+
+Both gray-scale and binary images can be converted to the common QImage objects contatining the appropriate image representation.
+
+· Since version 0.04 Libiprit became optionally multithreaded. By default multithreading is turned on. You can switch multithreading on and off either in the CMake file or in the common.h file.
+
+========================================================================================================
+
+Usage
+
+Libiprit follows some Qt conventions regarding image handling. For example, if you want to convert some QImage image to QIPGrayscaleImage, binarize it using the Sauvola algorithm, and then obtain the black and white QImage your code might look like this:
+
+QImage originalImage;
+...
+QIPGrayscaleImage gsImage = QIPGrayscaleImage::fromImage(originalImage, QIPGrayscaleImage::MinValue);
+QIPBlackANdWhiteImage bwImage = gsImage.binarize(QIPGrayscaleImage::SauvolaBinarization);
+QImage newImage = bwImage.toImage();
+
+And that is it.
+ 
